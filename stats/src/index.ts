@@ -1,14 +1,19 @@
 import { MatchReader } from "./MatchReader";
 import { MatchResult } from "./MatchResult";
+import{CsvFileReader} from './CsvFileReader'
 
-const reader = new MatchReader('football.csv');
-reader.read();
+// создать объект кот имплиментирует DataReader interface
+const csvFileReader = new CsvFileReader('football.csv')
 
-// console.log('reader.data = ', reader.data );
+// создать объект MachReader и 
+const matchReader = new MatchReader(csvFileReader);
+matchReader.load();
+
+// matchReader.matches - здесь содержится вся преобразованная инф-я
 
 let manUnitedWins = 0;
 
-for (let match of reader.data) {
+for (let match of matchReader.matches) {
   if (match[1] === 'Man United' && match[5] === MatchResult.HomeWin) { // 'Man United' победила в домашних матчах
     manUnitedWins++
   } else if (match[2] === 'Man United' && match[5] === MatchResult.AwayWin) { // 'Man United' победила в выездных матчах
