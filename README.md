@@ -2,6 +2,7 @@
 
 - http://joxi.ru/l2Z7QblUlJgo3A - таблица с исходными данными
 - http://joxi.ru/n2YyVbZukN3NB2 - цель приложения
+- http://joxi.ru/BA0yWj1u1O5DYr  - преобразование данных 
 
 ## Установка и запуск
 
