@@ -1,20 +1,34 @@
-import { CsvFileReader } from "./CsvFileReader";
-import { dateStringToDate } from "./util";
-import { MatchResult } from './MatchResult';
+import { dateStringToDate } from './util';
+import { MatchResult } from "./MatchResult";
 
 type MatchData = [Date, string, string, number, number, MatchResult, string,];
 
+interface DataReader {
+  read(): void;
+  data: string[][];
+}
 
-export class MatchReader extends CsvFileReader<MatchData> {
-  mapRow(row: string[]): MatchData {
-    return [
-      dateStringToDate(row[0]),
-      row[1],
-      row[2],
-      parseInt(row[3]),
-      parseInt(row[4]),
-      row[5] as MatchResult, // type assertion заявление, для ts row[5] -это строка и мы переопределяем ее в тип MatchResult т.е. значения 'H','A','D'
-      row[6]
-    ]
-  }
+export class MatchReader {
+
+matches: MatchData[] = [];
+
+  constructor(public reader: DataReader) { }
+
+  load(): void {
+    this.reader.read();
+    this.matches = this.reader.data.map((row: string[]): MatchData => {// заменим чуть позже
+      return [
+        dateStringToDate(row[0]),
+        row[1],
+        row[2],
+        parseInt(row[3]),
+        parseInt(row[4]),
+        row[5] as MatchResult, // переопределяем эту стр. в тип MatchResult т.е. значения 'H','A','D'
+        row[6]
+      ]
+    });
+   }
+
+
+
 }
